@@ -1,0 +1,80 @@
+.login-container {
+    display: flex;
+    max-width: 800px;
+    margin: 200px auto;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .image-container {
+    flex: 1;
+    background: #f4f4f4;
+  }
+  
+  .image-container img {
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .form-container {
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #fff;
+  }
+  
+  h2 {
+    margin-bottom: 20px;
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  button {
+    padding: 10px 20px;
+    background-color: #70c098;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #288a69;
+  }
+  
+  /* Responsif untuk layar kecil */
+  @media (max-width: 768px) {
+    .login-container {
+      flex-direction: column;
+    }
+  
+    .image-container {
+      height: 200px;
+    }
+  
+    .form-container {
+      padding: 15px;
+    }
+  }
+  

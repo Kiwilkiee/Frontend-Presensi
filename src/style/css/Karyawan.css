@@ -1,0 +1,156 @@
+/* Karyawan.css */
+.karyawan-page {
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 20px;
+  margin-left: 230px; /* Sesuaikan margin sesuai dengan tata letak Anda */
+  margin-top: 80px; /* Untuk menambahkan jarak dari atas halaman */
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.header-karyawan {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.header h1 {
+  margin: 0;
+  
+}
+
+.add-button {
+  display: flex;
+  align-items: center;
+}
+
+.filter-container {
+  display: flex;
+  align-items: center; /* Memastikan elemen berada di tengah secara vertikal */
+  margin-bottom: 20px;
+}
+
+.search-input {
+  margin-right: 10px; /* Jarak antara input pencarian dan dropdown */
+  flex: 1; /* Mengisi ruang yang tersedia */
+}
+
+.dropdown {
+  margin-right: 10px; /* Jarak antara dropdown dan dropdown lainnya */
+}
+
+.karyawan-table {
+  margin-top: 20px;
+  width: 100%;
+  border-collapse: collapse; /* Menghilangkan jarak antar sel tabel */
+}
+
+.karyawan-table th, .karyawan-table td {
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+
+.karyawan-table th {
+  background-color: #f4f4f4;
+}
+
+/* Responsif untuk layar kecil */
+@media (max-width: 992px) {
+  .karyawan-page {
+    margin-left: 20px; /* Sesuaikan margin untuk layar tablet */
+    margin-right: 20px; /* Sesuaikan margin untuk layar tablet */
+  }
+}
+
+@media (max-width: 768px) {
+  .karyawan-page {
+    margin-left: 0px; /* Sesuaikan margin untuk layar kecil */
+    margin-right: 0px; /* Sesuaikan margin untuk layar kecil */
+    padding: 15px; /* Kurangi padding untuk layar kecil */
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .add-button {
+    margin-top: 10px;
+  }
+
+  .filter-container {
+    flex-direction: column; /* Mengubah arah flex menjadi kolom pada layar kecil */
+    align-items: flex-start; /* Pastikan elemen berada di awal kolom */
+  }
+
+  .search-input {
+    margin-right: 0; /* Hilangkan margin kanan */
+    margin-bottom: 10px; /* Jarak bawah input pencarian pada layar kecil */
+    width: 100%; /* Mengisi lebar penuh */
+  }
+
+  .dropdown {
+    margin-right: 0; /* Hilangkan margin kanan */
+    margin-bottom: 10px; /* Jarak bawah dropdown pada layar kecil */
+    width: 100%; /* Mengisi lebar penuh */
+  }
+
+  .karyawan-table {
+    font-size: 0.7rem; /* Sesuaikan ukuran font untuk tabel */
+  }
+
+  .karyawan-table th, .karyawan-table td {
+    padding: 8px; /* Kurangi padding pada sel tabel */
+  }
+}
+
+@media (max-width: 480px) {
+  .karyawan-page {
+    padding: 10px; /* Kurangi padding untuk layar sangat kecil */
+  }
+
+  .header h1 {
+    font-size: .8rem; /* Sesuaikan ukuran font untuk layar sangat kecil */
+  }
+
+  .add-button {
+    font-size: 0.6rem; /* Sesuaikan ukuran font untuk tombol */
+  }
+
+  .filter-container {
+    padding: 10px 0; /* Tambahkan padding untuk jarak antar elemen */
+  }
+
+  .search-input, .dropdown {
+    font-size: 0.9rem; /* Sesuaikan ukuran font untuk input dan dropdown */
+  }
+
+  .karyawan-table {
+    font-size: 0.6rem; /* Kurangi ukuran font lebih lanjut untuk tabel */
+  }
+
+  .karyawan-table th, .karyawan-table td {
+    padding: 3px; /* Kurangi padding lebih lanjut pada sel tabel */
+    width: 50px;
+  }
+  .pagination-container {
+    margin-top: 10px;
+    flex-direction: row; /* Ensure buttons stay in one line */
+    flex-wrap: nowrap; /* Prevent line wrapping */
+}
+}
+/* Responsif untuk pagination */
+@media (max-width: 768px) {
+  .pagination-container {
+      justify-content: center;
+  }
+
+  .pagination-container .pagination {
+      flex-direction: row;
+      flex-wrap: nowrap; /* Prevent line wrapping */
+      overflow-x: auto; /* Allow horizontal scrolling if needed */
+  }
+}

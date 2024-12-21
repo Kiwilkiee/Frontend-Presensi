@@ -1,0 +1,22 @@
+/* AdminLayout.css */
+.admin-layout {
+    display: flex;
+}
+
+.sidebar-open {
+    margin-left: 50px; /* Atur sesuai lebar sidebar */
+}
+
+.sidebar-closed {
+    margin-left: none;
+}
+
+.content {
+    flex: 1;
+    transition: margin-left 0.5s;
+}
+
+main {
+    margin-top: 40px;
+    margin-left: 0px;
+}
