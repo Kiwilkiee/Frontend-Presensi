@@ -1,0 +1,48 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #ffffff;
+    color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.toggle-button {
+    background-color: #fffffe;
+    border: none;
+    color: #81c77f;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.toggle-button:hover{
+    background-color: #ffffff;
+}
+
+.logout-button {
+    background: none;
+    border: none;
+    color: #81c77f;
+    font-size: 24px;
+    cursor: pointer;
+}
+.notification-button {
+    background: none;
+    border: none;
+    color: #81c77f;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.notification-button:hover {
+    background-color: #ffffff;
+}
+
+.logout-button {
+    margin-left: auto;
+    margin-right: 30px;
+}
+.logout-button:hover{
+    background-color: #ffffff;
+}

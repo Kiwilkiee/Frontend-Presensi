@@ -1,0 +1,40 @@
+.clock-container {
+    text-align: center;
+    font-family: Arial, sans-serif;
+    background: #b6afaf73;
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transform-style: preserve-3d;
+    transform: perspective(1000);
+  }
+  
+  .clock-day {
+    font-size: 24px;
+    margin-bottom: 10px;
+    transform: translateZ(40px)
+
+  }
+  
+  .clock-time {
+    font-size: 48px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    transform: translateZ(40px)
+  }
+  
+  .clock-date {
+    font-size: 20px;
+    transform: translateZ(40px)
+
+  }
+  
+  .Tilt {
+    width: 300px;
+    margin: 0 auto;
+    transition: transform 0.1s ease;
+    transform-style: preserve-3d;
+    transform: perspective(1000);
+  }
+  

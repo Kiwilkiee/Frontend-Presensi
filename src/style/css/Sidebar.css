@@ -1,0 +1,143 @@
+.sidebar {
+    width: 250px;
+    height: 100%;
+    background-color: #ffffff;
+    color: white;
+    position: fixed;
+    top: 0;
+    transition: transform 0.3s ease;
+    z-index: 1000000;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.sidebar.closed {
+    transform: translateX(-100%);
+}
+
+.sidebar.open {
+    transform: translateX(0);
+}
+
+
+.sidebar ul li {
+    padding: 0px 50px 0px 0px; /* Atas 10px, kanan 20px, bawah 30px, kiri 40px */
+    cursor: pointer;
+    font-size: 20px;
+    list-style: none;
+    margin-top: 10px;
+    
+
+}
+
+.sidebar li:hover {
+    color: #000000;
+}
+
+
+
+.profile-section {
+    text-align: center;
+    margin-bottom: 20px;
+    margin-top: 50px;
+}
+
+.profile-section img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+
+  
+  .sidebar .profile-section h1::after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 2px; /* Ketebalan garis */
+    background-color: #ffffff; /* Warna garis */
+    position: absolute;
+    bottom: -5px; /* Jarak garis dari teks h1 */
+    left: 0;
+  }
+  
+.sidebar ul li a {
+    font-weight: bold;
+    color: #71a236; /* Ubah sesuai dengan warna yang diinginkan */
+    text-decoration: none;
+    margin-left: 20px;
+}
+.sidebar ul li:hover,
+.sidebar ul li a:hover {
+    color: #2c3e1d;
+}
+
+@media (max-width: 500px) {
+    .sidebar {
+        width: 0;
+        overflow: hidden;
+    }
+
+    .sidebar.open {
+        width: 200px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        transition: width 0.3s ease-in-out;
+    }
+
+    .sidebar.open .sidebar--logo {
+        margin-top: 3rem;
+    }
+
+    .sidebar-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        width: 50px;
+        height: 30px;
+        border-radius: 4px;
+        background: #eee;
+        color: #000000;
+        position: absolute;
+        z-index: 2;
+        margin: 10px 5px; /* Fixed typo here */
+        cursor: pointer;
+}
+}
+.sidebar ul li a {
+    font-weight: bold;
+    color: #81c77f; /* Warna default */
+    text-decoration: none;
+    margin-left: 20px;
+    transition: font-size 0.3s ease, margin-left 0.3s ease;
+    font-size: 22px; /* Ukuran font default */
+}
+
+@media (max-width: 768px) {
+    .sidebar ul li a {
+        font-size: 20px; /* Ukuran font pada layar 768px */
+        margin-left: 18px;
+    }
+}
+
+@media (max-width: 500px) {
+    .sidebar ul li a {
+        font-size: 16px; /* Ukuran font pada layar 500px */
+        margin-left: 15px;
+    }
+}
+
+.sidebar ul li:hover a,
+.sidebar ul li a:hover {
+    color: #295506; /* Warna hover */
+}
+
+.sidebar h1{
+    justify-content: center;
+    align-items: center;
+    margin-left: 20px;
+    color: #81c77f;
+}

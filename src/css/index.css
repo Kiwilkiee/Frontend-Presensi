@@ -1,0 +1,367 @@
+    body{
+        font-family: 'Varela Round', sans-serif;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        background: #fafafa;
+        height: 100vh;
+
+    }
+    .login-page {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0;
+        min-height: 100vh;
+    }
+    .login-container {
+        width: 100%;
+        max-width: 400px;
+        padding: 20px;
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.486);
+    }
+    .text-login {
+        margin-bottom: 20px;
+        text-align: center;
+        border-bottom: 2px solid #00000050;
+    }
+    .login-container .form-control {
+        height: 45px;
+        border: none;
+        border-bottom: 2px solid #00000050;
+        box-shadow: none;
+        outline: none;
+        padding: 10px;
+        font-size: 16px;
+    }
+    .login-container .btn {
+        padding: 10px;
+        font-size: 18px;
+        border-radius: 50px;
+    }
+    @media (max-width: 576px) {
+        .login-container {
+            padding: 15px;
+        }
+    }
+
+    /* HomeUser  */
+
+    .section {
+        margin-top: 10px;
+        margin-bottom: 20px;
+    }
+
+    .card {
+        color: #000000;
+        border-radius: 50px;
+        background-color: #ffffff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        padding: 10px;
+        
+        text-align: center;
+        
+    }
+    button.card-absensi  {
+        border: none;
+        padding: 20px !important;
+        align-items: center;
+        border-radius: 30px;
+        width: 100%;
+        
+        box-shadow: 0 0 9px 2px #0000002c;
+
+    }
+
+
+    /* Gaya khusus untuk gambar avatar */
+    .avatar img {
+        width: 60px;
+        height: 60px;
+        border-radius: 50% !important;
+        border: 2px solid #000000;
+    }
+
+    /* Gaya ikon dalam tombol menu */
+    .menu-icon a {
+        font-size: 40px;
+
+    }
+
+    /* Gaya ikon dalam presensi */
+    .iconpresence ion-icon {
+        font-size: 30px;
+        filter: drop-shadow (0px 0px 40px 8px rgba(0, 0, 0, 0.432));
+    }
+
+
+    /* Gradien untuk tombol "Masuk" */
+    .gradasigreen {
+        background: rgb(14,255,0);
+        background: linear-gradient(21deg, rgba(14,255,0,1) 35%, rgba(202,255,0,1) 91%);
+        
+    }
+
+    /* Gradien untuk tombol "Pulang" */
+    .gradasired {
+        background: linear-gradient(45deg, #FF4500, #FF6347);
+        border-radius: 50px;
+        align-items: center;
+    }
+
+    button.card-absensi:hover {
+        transform: translateY(-5px); 
+        cursor: pointer;
+        filter: brightness(0.9); /* Memberikan sedikit efek saat hover */
+    }
+
+
+    button.card-absensi:active {
+        transform: translateY(0);
+        filter: brightness(0.9);
+        
+    }
+
+    .headers {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 20px;
+        border-radius: 50px;
+        background-color: #19c702;
+        cursor: pointer;
+        color: white;
+        box-shadow: 0 0px 9px rgb(0, 123, 255) ;
+    }
+    .headers h1 {
+        margin: 0;
+        font-size: 20px;
+    }
+    .headers .back-button {
+        padding: 5px;
+        background-color: #fafafa;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        transition: all 0.3s ease-in-out;
+        cursor: pointer;
+        color: #19c702;
+    }
+
+   
+
+    .profile-container {
+        background: rgb(247, 247, 247);
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin: 20px;
+        padding: 20px;
+        text-align: center;
+        position: relative;
+    }
+    .avatar-profile img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .avatar-profile {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    margin: 0 auto;
+    position: relative; /* Ensures that the edit button can be positioned absolutely */
+    overflow: hidden; /* Ensures that the content stays within the rounded shape */
+    }
+
+    .edit-avatar {
+    position: absolute;
+    bottom: 10px; /* Adjust the position if necessary */
+    right: 10px; /* Adjust the position if necessary */
+    background-color: #007bff;
+    color: white;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border: 2px solid white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    z-index: 10; /* Ensure the button appears above the image */
+    }
+    .data-profile {
+        text-align: left;
+        margin-top: 20px;
+    }
+    .profile-name, .profile-position, .profile-email, .profile-password {
+        font-size: 16px;
+        color: #666;
+        margin: 10px 0;
+        display: flex;
+        align-items: center;
+    }
+    .profile-name {
+        font-size: 24px;
+        font-weight: bold;
+    }
+    .underline {
+        border-bottom: 1px solid #ddd;
+        padding-bottom: 5px;
+        flex: 1;
+    }
+    .edit-icon {
+        cursor: pointer;
+        color: #007bff;
+        margin-left: 10px;
+    }
+    .edit-icon ion-icon {
+        font-size: 20px;
+    }
+    .icon {
+        font-size: 20px;
+        color: #007bff;
+        margin-right: 10px;
+    }
+
+    .modal-dialog {
+        position: absolute;
+        bottom: 20px;
+        width: 100%;
+        margin: 0;
+    }
+
+    .button-logout {
+        border: none;
+        background-color: crimson;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 50px;
+        cursor: pointer;
+        font-size: 16px;
+        margin-top: 20px;
+        justify-content: flex-end !important;
+        box-shadow: 0 0px 9px rgb(255, 0, 0) ;
+
+    }
+
+    .button-logout:hover {
+        background-color: whitesmoke;
+        color: crimson;
+        transition:  1s;
+
+    }
+
+    /* index.css */
+    .Hadir {
+        color: white;
+        background-color: rgb(14, 238, 14); /* Hijau */
+        border-radius: 50px; /* Bentuk kapsul */
+        padding: 1px 5px !important;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        text-align: center !important;
+        display: inline-block;
+        min-width: 70px; /* Panjang minimal */
+    }
+
+    .Progress {
+        color: white;
+        background-color: rgb(252, 195, 9); /* Kuning */
+        border-radius: 50px; /* Bentuk kapsul */
+        padding: 2px 6px !important;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        text-align: center !important;
+        display: inline-block;
+        min-width: 80px; /* Panjang minimal */
+    }
+
+    .status-tidak-hadir {
+        color: white;
+        background-color: rgb(220, 53, 69); /* Merah */
+        border-radius: 50px; /* Bentuk kapsul */
+        padding: 3px 5px !important;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        text-align: center !important;
+        display: inline-block;
+        min-width: 80px; /* Panjang minimal */
+    }
+
+
+
+    .unauthorized-page {
+        background-color: #f8f9fa; /* Warna latar belakang ringan */
+    }
+    
+    .text-center h1 {
+        font-size: 6rem; /* Ukuran besar untuk angka error */
+        font-weight: bold; 
+    }
+    
+    .text-center h2 {
+        font-size: 2rem;
+        font-weight: 500;
+    }
+    
+    .text-center p {
+        font-size: 1.2rem;
+        color: #6c757d;
+    }
+    
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+        padding: 10px 20px;
+        font-size: 1rem;
+    }
+    
+    .btn-outline-secondary {
+        padding: 10px 20px;
+        font-size: 1rem;
+    }
+    
+
+    .background-container {
+        background: rgb(247, 247, 247);
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin: 20px;
+        padding: 20px;
+    }
+
+
+    /* presnesi */
+
+    .webcam-container {
+        margin-top: 20px;
+      }
+      
+      .map-container {
+        margin-top: 20px;
+      }
+      
+      button {
+        margin-top: 10px;
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        cursor: pointer;
+      }
+      
+      button:hover {
+        background-color: #0056b3;
+      }
+      
+
+      .modal {
+        z-index: 1050 !important;
+      }
+      
+      .modal-backdrop {
+        z-index: 1040 !important;
+      }
+      

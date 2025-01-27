@@ -1,0 +1,269 @@
+/* Global Styles */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.app {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Navbar */
+.navbar {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000; /* Ensure navbar is on top */
+}
+
+/* Main Content */
+.main-content {
+    margin-top: 0px; /* to push content below the navbar */
+    margin-left: 850px; /* to push content beside the sidebar */
+    padding: 20px 0px 0px 270px;
+    transition: 0.3s ease;
+    background-color: black;
+}
+
+.sidebar.closed + .main-content {
+    margin-left: 0;
+}
+
+.sidebar ul li{
+    margin-top: 30px;
+}
+
+
+
+/* Dashboard Container */
+.dashboard-container {
+    padding: 50px 10px 0px 260px;
+    
+}
+
+.dashboard-container h1 {
+    margin-bottom: 20px;
+}
+
+/* Box Container */
+.box-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* Jarak antar box */
+}
+
+.box {
+    background-color: #f4f4f4;
+    border: 1px solid #ddd;
+    padding: 20px;
+    height: 170px;
+    margin-bottom: 0px;
+    border-radius: 8px;
+    flex: 1 1 calc(25% - 40px); /* Lebar box: 25% dengan jarak 20px di setiap sisi */
+    box-sizing: border-box;
+}
+
+/* Chart Container */
+.chart-container {
+    display: flex;
+    flex-wrap: wrap; /* Mengizinkan pembungkusan elemen jika ruang tidak cukup */
+    gap: 20px; /* Jarak antara grafik */
+    margin-bottom: 0px;
+}
+.box-icon {
+    font-size: 1.5rem; /* Ukuran ikon */
+    color: #5b8d54; /* Warna ikon */
+    margin-bottom: 10px;
+    justify-content: left;
+}
+
+.box-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.box-number {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #333;
+}
+
+.box-label {
+    font-size: 1rem;
+    color: #666;
+}
+.chart-container {
+    display: flex;
+    flex-direction: row;
+    gap: 20px; /* Jarak antara grafik */
+}
+.chart {
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+}
+.chart-title {
+    margin-bottom: 1rem;
+}
+.activity-chart {
+    flex: 0.99;
+    width: 70px;
+    margin-top: 30px;
+}
+
+
+.pending {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 8px;
+    width: 30%;
+    margin-top: 30px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.action-button {
+    background-color: #959595;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.action-button:hover {
+    background-color: #0056b3;
+}
+.account-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+
+
+/* Responsive Styles */
+@media (max-width: 1200px) {
+    .main-content {
+        margin-left: 20px; /* Mengurangi margin kiri */
+        padding: 20px;
+    }
+
+    
+
+    .dashboard-container {
+        padding: 20px;
+    }
+    
+}
+
+@media (max-width: 992px) {
+    .main-content {
+        margin-left: 10px; /* Mengurangi margin kiri */
+    }
+
+    .sidebar {
+        width: 180px; /* Mengurangi lebar sidebar */
+        margin-top: 0px;
+    }
+    .navbar{
+         z-index: 10000; /* Ensure navbar is on top */
+    }
+
+    .profile-section img{
+        margin-top: 30px;
+    }
+    .box-container {
+        flex-direction: column; /* Mengubah arah flexbox menjadi kolom */
+    }
+
+    .box {
+        flex: 1 1 100%; /* Menyesuaikan lebar box */
+    }
+
+    .chart-container {
+        flex-direction: column; /* Mengubah arah flexbox menjadi kolom */
+    }
+
+    .activity-chart {
+        width: 100%; /* Lebar penuh */
+    }
+
+    .pending {
+        width: 100%; /* Lebar penuh */
+    }
+}
+
+@media (max-width: 768px) {
+    .main-content {
+        margin-left: 0; /* Menghapus margin kiri */
+        padding: 10px;
+    }
+
+    
+
+    .dashboard-container {
+        padding: 10px;
+    }
+
+    .box-container {
+        flex-direction: column; /* Mengubah arah flexbox menjadi kolom */
+    }
+
+    .box {
+        flex: 1 1 100%; /* Menyesuaikan lebar box */
+    }
+
+    .chart-container {
+        flex-direction: column; /* Mengubah arah flexbox menjadi kolom */
+    }
+
+    .activity-chart {
+        width: 100%; /* Lebar penuh */
+    }
+
+    .pending {
+        width: 100%; /* Lebar penuh */
+    }
+}
+
+@media (max-width: 480px) {
+    .box {
+        flex: 1 1 100%; /* Lebar penuh */
+    }
+
+    .chart {
+        padding: 15px; /* Menyesuaikan padding */
+    }
+
+    .pending {
+        padding: 15px; /* Menyesuaikan padding */
+    }
+
+    .account-row {
+        flex-direction: column; /* Mengubah arah flexbox menjadi kolom */
+    }
+
+    .action-button {
+        padding: 5px 8px; /* Menyesuaikan padding */
+        font-size: 14px; /* Menyesuaikan ukuran font */
+    }
+}
+
+.chart-container {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .chart-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
