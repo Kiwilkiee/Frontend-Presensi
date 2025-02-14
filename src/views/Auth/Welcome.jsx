@@ -3,6 +3,9 @@ import { useNavigate } from "react-router-dom";
 import "../../css/welcome.css"; // Import file CSS
 
 const Welcome= () => {
+
+  document.title = "Welcome - Absensi Indogreen";
+
   const navigate = useNavigate();
 
   const goToLogin = () => {

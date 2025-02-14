@@ -37,7 +37,9 @@ const Karyawan = lazy(() => import('../views/AdminDashboard/KaryawanPage.jsx'))
 
 const Absensi = lazy(() => import('../views/AdminDashboard/AbsensiPage.jsx'))
 
-const AbsensiDetail = lazy(() => import('../views/AdminDashboard/AbsensiDetailPage.jsx'))
+const Rekap = lazy(() => import('../views/AdminDashboard/RekapPage.jsx'))
+
+const PengajuanAdmin = lazy(() => import('../views/AdminDashboard/PengajuanPage.jsx'))
 
 const Unauth = lazy(() => import('../views/Auth/Unauth.jsx'))
 
@@ -69,12 +71,12 @@ export default function RoutesIndex() {
                 />
 
                 <Route 
-                path="/unauthorized"
-                element={
-                    <Suspense fallback={<Loader />}>
-                        <Unauth />
-                    </Suspense>
-                }
+                    path="/unauthorized"
+                    element={
+                        <Suspense fallback={<Loader />}>
+                            <Unauth />
+                        </Suspense>
+                    }
                 />
 
                 <Route 
@@ -172,12 +174,12 @@ export default function RoutesIndex() {
                 />
 
                 <Route
-                    path='/Absensi/Detail/:date'
+                    path='/Rekap'
                     element={
                         <Suspense fallback={<Loader />}>
                             <PrivateRoutes allowedRoles={['admin']}>
                                 <AdminLayout >
-                                    <AbsensiDetail />
+                                    <Rekap />
                                 </AdminLayout>
                             </PrivateRoutes>
                         </Suspense>
@@ -185,9 +187,19 @@ export default function RoutesIndex() {
                 />
 
 
+                <Route 
+                    path='/pengajuan-adm'
+                    element={
+                        <Suspense fallback={<Loader />}>
+                            <PrivateRoutes allowedRoles={['admin']}>
+                                <AdminLayout>
+                                    <PengajuanAdmin />
+                                </AdminLayout>
+                            </PrivateRoutes>
+                        </Suspense>
+                    }
+                />
 
-
-               
 
 
             </Routes>

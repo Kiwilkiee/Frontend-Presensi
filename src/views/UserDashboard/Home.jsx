@@ -9,6 +9,7 @@ import Cookies from 'js-cookie';
 import {toast} from 'react-hot-toast';
 import Clock from '../../components/Clock';
 import axios from '../../api';
+import Swal from 'sweetalert2'; // Import SweetAlert2
 
 
 const Home = () => {
@@ -117,17 +118,35 @@ const Home = () => {
 };
 
 
-  const handleLogout = (e) => {
-
-    Cookies.remove('token');
-    Cookies.remove('user');
-
-    localStorage.removeItem('user');
-    localStorage.removeItem('token');
-
-    navigate('/');
-
-  }
+  const handleLogout = () => {
+          Swal.fire({
+              title: 'Apakah yakin ingin keluar?',
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'Ya, keluar',
+              cancelButtonText: 'Batal'
+          }).then((result) => {
+              if (result.isConfirmed) {
+                  // Hapus token dan user dari cookies dan localStorage
+                  Cookies.remove('token');
+                  Cookies.remove('user');
+                  localStorage.removeItem('user');
+                  localStorage.removeItem('token');
+      
+                  Swal.fire({
+                      title: 'Berhasil Logout',
+                      text: 'Anda berhasil keluar dari aplikasi.',
+                      icon: 'success',
+                      timer: 1500,
+                      showConfirmButton: false
+                  }).then(() => {
+                      navigate('/login');
+                  });
+              }
+          });
+      };
 
   return (
     <div className="container" id="appCapsule">

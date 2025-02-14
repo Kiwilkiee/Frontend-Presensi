@@ -4,23 +4,23 @@ import { Button } from 'react-bootstrap';
 import Cookies from 'js-cookie';
 
 const Unauthorized = () => {
+    document.title = "Unauth - Absensi Indogreen";
     const navigate = useNavigate();
 
     const clearDataAndRedirect = () => {
-        // Menghapus semua cookies
-        const cookies = Cookies.get();
-        Object.keys(cookies).forEach(cookie => {
-            Cookies.remove(cookie);
-        });
-        
-        // Menghapus semua data dari localStorage
+        Cookies.remove('token');
+        Cookies.remove('user');
         localStorage.clear();
-
-        // Navigasi ke halaman login
         navigate('/');
     };
 
-    const goBack = () => navigate(-1);
+    const goBack = () => {
+        if (window.history.length > 2) {
+            navigate(-1);
+        } else {
+            navigate('/home'); // Atau ganti dengan halaman lain
+        }
+    };
 
     return (
         <div className="unauthorized-page d-flex justify-content-center align-items-center vh-100">

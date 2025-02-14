@@ -10,65 +10,73 @@ const Login = () => {
     document.title = "Login - Absensi Indogreen";
 
     const navigate = useNavigate();
-
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const [error, setError] = useState('');
-
-
     const handleLogin = async (e) => {
-    e.preventDefault();
-
-    try {
-        const response = await axios.post('/login', { 
-            email: email,
-            password: password 
-        });
-
-        const userRole = response.data.user.roles[0].name; // Ambil role dari user
-
-        // Simpan data user dan token
-        localStorage.setItem('user', JSON.stringify(response.data.user));
-        localStorage.setItem('role', userRole); // Simpan role
-        localStorage.setItem('token', response.data.token);
-
-        // Set cookies
-        Cookies.set('token', response.data.token, { expires: 7 });
-        Cookies.set('user', JSON.stringify(response.data.user), { expires: 7 });
-
-        toast.success('Login Berhasil', {
-            position: "top-right",
-            duration: 4000,
-        });
-
-        // Arahkan berdasarkan role 
-        if (userRole === 'admin') {
-            navigate('/dashboard'); 
-        } else if (userRole === 'karyawan') {
-            navigate('/home');
-        }
-
-    } catch (error) {
-        // Penanganan error
-        if (error.response && error.response.data) {
-            toast.error('Gagal login. Periksa kembali email dan password Anda.', {
+        e.preventDefault();
+    
+        // ✅ Cek panjang password sebelum mengirim request
+        if (password.length < 5) {
+            toast.error('Password harus minimal 5 karakter!', {
                 position: "top-right",
                 duration: 4000,
             });
-        } else {
-            toast.error('Terjadi kesalahan sistem.', {
-                position: "top-right",
-                duration: 4000,
-            });
+            return; // Mencegah request dikirim ke server
         }
-    }
-};
-
+    
+        try {
+            const response = await axios.post('/login', { 
+                email: email,
+                password: password 
+            });
+    
+            if (response.status === 200) {
+                const userRole = response.data.user.roles[0].name;
+    
+                localStorage.setItem('user', JSON.stringify(response.data.user));
+                localStorage.setItem('role', userRole);
+                localStorage.setItem('token', response.data.token);
+    
+                Cookies.set('token', response.data.token, { expires: 7 });
+                Cookies.set('user', JSON.stringify(response.data.user), { expires: 7 });
+    
+                toast.success('Login Berhasil!', {
+                    position: "top-right",
+                    duration: 4000,
+                });
+    
+                if (userRole === 'admin') {
+                    navigate('/dashboard'); 
+                } else if (userRole === 'karyawan') {
+                    navigate('/home');
+                }
+            }
+        } catch (error) {
+            if (error.response && error.response.status === 401) {
+                toast.error('Email atau password salah!', {
+                    position: "top-right",
+                    duration: 4000,
+                });
+            } else if (error.response && error.response.status === 422) {
+                toast.error('Password terlalu pendek!', {
+                    position: "top-right",
+                    duration: 4000,
+                });
+            } else {
+                toast.error('Terjadi kesalahan sistem. Coba lagi nanti.', {
+                    position: "top-right",
+                    duration: 4000,
+                });
+            }
+        }
+    };
+    
 
     useEffect(() => {
         // Jika token ada, redirect ke halaman home
-        if (Cookies.get('token')) {
+        const token = Cookies.get('token');
+        if (token) {
             const user = JSON.parse(Cookies.get('user'));
             if (user.role === 'admin') {
                 navigate('/dashboard');
@@ -88,9 +96,6 @@ const Login = () => {
                     <h3>Login</h3>
                     <p>Silahkan masukkan email dan password Anda</p>
                 </div>
-
-                {/* Tampilkan pesan kesalahan jika ada */}
-                {error && <div className="alert alert-danger">{error}</div>}
 
                 <form onSubmit={handleLogin}>
                     <div className="mb-3">

@@ -1,92 +1,77 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import axios from '../../api';
-import { Table, Pagination, Button, Spinner, Alert } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
-import Swal from 'sweetalert2';
-import '../../style/css/Absensi.css';
+import React, { useEffect, useState } from "react";
+import axios from "../../api";
+import moment from "moment"; 
 
 function AbsensiPage() {
+
+  document.title = "Absensi - Absensi Indogreen";
+
   const [absensi, setAbsensi] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(5);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
-  const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get('/absensi')
-      .then(response => {
-        setAbsensi(response.data);
-      })
-      .catch(err => {
-        setError('Gagal mengambil data absensi');
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+    fetchAbsensi();
   }, []);
 
-  // Kelompokkan absensi berdasarkan tanggal menggunakan useMemo agar tidak menghitung ulang
-  const groupedByDate = useMemo(() => {
-    return absensi.reduce((acc, item) => {
-      const date = new Date(item.jam_masuk).toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric' });
-      if (!acc[date]) acc[date] = [];
-      acc[date].push(item);
-      return acc;
-    }, {});
-  }, [absensi]);
-
-  const dateList = Object.keys(groupedByDate);
-  const totalPages = Math.ceil(dateList.length / itemsPerPage);
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = dateList.slice(indexOfFirstItem, indexOfLastItem);
-
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
-  if (loading) return <Spinner animation="border" />;
-  if (error) return <Alert variant="danger">{error}</Alert>;
+  const fetchAbsensi = async () => {
+    try {
+      const response = await axios.get("/today"); 
+      setAbsensi(response.data.data);
+    } catch (error) {
+      console.error("Error fetching absensi:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
-    <div className='absensi-page'>
-      <h1>Rekap Absensi</h1>
-      <Table striped bordered hover className="absensi-table">
-        <thead>
-          <tr>
-            <th>Tanggal</th>
-            <th>Aksi</th>
-          </tr>
-        </thead>
-        <tbody>
-          {currentItems.map((date, index) => (
-            <tr key={index}>
-              <td>{date}</td>
-              <td>
-                <Button 
-                  variant="primary" 
-                  onClick={() => navigate(`/absensi/detail/${date}`)}
-                >
-                  Lihat Detail
-                </Button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </Table>
+    <div className="main-content">
+      <h4 className="mb-3 text-center">Absensi Hari Ini</h4>
 
-      <Pagination className="pagination-container">
-        <Pagination.Prev onClick={() => paginate(currentPage - 1)} disabled={currentPage === 1} />
-        {[...Array(totalPages).keys()].map((number) => (
-          <Pagination.Item
-            key={number + 1}
-            active={number + 1 === currentPage}
-            onClick={() => paginate(number + 1)}
-          >
-            {number + 1}
-          </Pagination.Item>
-        ))}
-        <Pagination.Next onClick={() => paginate(currentPage + 1)} disabled={currentPage === totalPages} />
-      </Pagination>
+      {loading ? (
+        <div className="text-center">Loading...</div>
+      ) : (
+        <div className="table-responsive">
+          <table className="table table-striped">
+            <thead className="table-dark">
+              <tr>
+                <th>No</th>
+                <th>Nama</th>
+                <th>Tanggal</th>
+                <th>Jam Masuk</th>
+                <th>Jam Pulang</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {absensi.length > 0 ? (
+                absensi.map((item, index) => (
+                  <tr key={item.id}>
+                    <td>{index + 1}</td>
+                    <td>{item.nama}</td>
+                    <td>{moment(item.created_at).format("DD-MM-YYYY")}</td> 
+                    <td>{item.jam_masuk ? moment(item.jam_masuk).format("HH:mm") : "-"}</td>
+                    <td>{item.jam_pulang ? moment(item.jam_pulang).format("HH:mm") : "-"}</td>
+                    <td>
+                      {item.jam_masuk && item.jam_pulang
+                        ? "Hadir"
+                        : item.jam_masuk && !item.jam_pulang
+                        ? "Proses"
+                        : "Tidak Hadir"}
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="6" className="text-center">
+                    Tidak ada data absensi hari ini
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+      )}
     </div>
   );
 }

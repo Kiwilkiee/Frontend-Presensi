@@ -29,6 +29,7 @@ const SidebarComponent = ({ isOpen }) => {
                         <FontAwesomeIcon icon={faUsers} /> Karyawan
                     </NavLink>
                 </li>
+
                 <li>
                     <NavLink
                         to="/absensi"
@@ -37,6 +38,7 @@ const SidebarComponent = ({ isOpen }) => {
                         <FontAwesomeIcon icon={faClock} /> Absensi
                     </NavLink>
                 </li>
+
                 <li>
                     <NavLink
                         to="/rekap"
@@ -45,9 +47,10 @@ const SidebarComponent = ({ isOpen }) => {
                         <FontAwesomeIcon icon={faClipboard} /> Rekap
                     </NavLink>
                 </li>
+
                 <li>
                     <NavLink
-                        to="/pengajuan"
+                        to="/pengajuan-adm"
                         className={({ isActive }) => (isActive ? 'active' : '')}
                     >
                         <FontAwesomeIcon icon={faFileAlt} /> Pengajuan {/* Menu Pengajuan */}

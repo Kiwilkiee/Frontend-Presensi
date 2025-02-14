@@ -6,7 +6,7 @@
     position: fixed;
     top: 0;
     transition: transform 0.3s ease;
-    z-index: 1000000;
+    z-index: 1000;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
@@ -140,4 +140,24 @@
     align-items: center;
     margin-left: 20px;
     color: #81c77f;
+}
+
+.main-content {
+    margin-left: 250px;
+    padding: 20px;
+    transition: margin-left 0.3s ease-in-out;
+    position: relative;
+    z-index: 1;
+}
+
+/* Jika sidebar tertutup */
+.sidebar.closed + .main-content {
+    margin-left: 0;
+}
+
+/* Untuk tampilan responsif */
+@media (max-width: 768px) {
+    .main-content {
+        margin-left: 0; /* Sidebar akan menyembunyikan diri di layar kecil */
+    }
 }

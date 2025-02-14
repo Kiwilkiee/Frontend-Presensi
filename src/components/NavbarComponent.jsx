@@ -1,10 +1,15 @@
 import React from 'react';
-import { FaBars, FaSignOutAlt, FaBell } from 'react-icons/fa'; // Import ikon lonceng
-import Swal from 'sweetalert2'; // Import SweetAlert2
-import axios from '../api'; // Import axios untuk HTTP requests
+import { FaBars, FaSignOutAlt, FaBell } from 'react-icons/fa'; 
+import Swal from 'sweetalert2'; 
+import axios from '../api'; 
 import '../style/css/Navbar.css';
+import Cookies from 'js-cookie';
+import { useNavigate } from 'react-router-dom';
 
 const NavbarComponent = ({ toggleSidebar }) => {
+
+    const navigate = useNavigate();
+
     const handleLogout = () => {
         Swal.fire({
             title: 'Apakah yakin ingin keluar?',
@@ -16,41 +21,37 @@ const NavbarComponent = ({ toggleSidebar }) => {
             cancelButtonText: 'Batal'
         }).then((result) => {
             if (result.isConfirmed) {
-                // Lakukan request logout ke backend
-                axios.post('/api/logout')
-                    .then(response => {
-                        console.log(response.data.message);
-                        // Arahkan pengguna ke halaman login setelah logout berhasil
-                        window.location.href = '/';
-                        Swal.fire({
-                            title: 'Berhasil Logout',
-                            text: 'Anda berhasil keluar dari aplikasi.',
-                            icon: 'success'
-                        });
-                    })
-                    .catch(error => {
-                        console.error('There was an error logging out:', error);
-                        Swal.fire({
-                            title: 'Gagal Logout',
-                            text: 'Terjadi kesalahan saat mencoba logout. Coba lagi nanti.',
-                            icon: 'error'
-                        });
-                    });
+                Cookies.remove('token');
+                Cookies.remove('user');
+                localStorage.removeItem('user');
+                localStorage.removeItem('token');
+    
+                Swal.fire({
+                    title: 'Berhasil Logout',
+                    text: 'Anda berhasil keluar dari aplikasi.',
+                    icon: 'success',
+                    timer: 1500,
+                    showConfirmButton: false
+                }).then(() => {
+                    navigate('/login');
+                });
             }
         });
     };
 
+    
+
     return (
         <nav className="navbar">
             <button className="toggle-button" onClick={toggleSidebar}>
-                <FaBars /> {/* Ikon toggle */}
+                <FaBars /> 
             </button>
             <div className="navbar-icons">
                 <button className="notification-button">
-                    <FaBell /> {/* Ikon lonceng */}
+                    <FaBell /> 
                 </button>
                 <button className="logout-button" onClick={handleLogout}>
-                    <FaSignOutAlt /> {/* Ikon logout */}
+                    <FaSignOutAlt />
                 </button>
             </div>
         </nav>

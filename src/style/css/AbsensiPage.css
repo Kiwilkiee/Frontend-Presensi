@@ -1,0 +1,46 @@
+.absensi-page {
+    padding: 20px;
+    background-color: #f9f9f9;
+}
+
+h2 {
+    color: #333;
+}
+
+.absensi-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.absensi-table th, .absensi-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+.absensi-table th {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.status {
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.status.hadir {
+    background-color: #ffcc00;
+    color: #000;
+}
+
+.status.selesai {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.status.belum {
+    background-color: #f44336;
+    color: white;
+}

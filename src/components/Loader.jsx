@@ -5,7 +5,7 @@ export default function Loader(){
         <div className="d-flex justify-content-center">
             <div className="row">
                 <div className="spinner-border" role="status" style={{ width: '3rem', height: '3rem', position: 'absolute', left: '50%', top: '50%'}}>
-                  <span className="sr-only">Tunggu Sebentar...</span>
+                  <span className="sr-only"></span>
                 </div>
             </div>
         </div>
