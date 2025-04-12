@@ -1,298 +1,168 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import '../../style/css/Home.css';
+import {
+  FaUser, FaFileAlt, FaCamera, FaCalendarAlt,
+  FaArrowRight, FaClock, FaExclamationCircle
+} from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
-import {  FiLogIn, FiLogOut as FiLogout } from 'react-icons/fi';
-import { AiOutlineLogout } from 'react-icons/ai';
-import { FaUserTie } from 'react-icons/fa';
-import { BsClockHistory } from 'react-icons/bs';
-import { IoCalendarOutline } from 'react-icons/io5';
-import Cookies from 'js-cookie';
-import {toast} from 'react-hot-toast';
-import Clock from '../../components/Clock';
-import axios from '../../api';
-import Swal from 'sweetalert2'; // Import SweetAlert2
+import Api from '../../api'; // <- pastikan path-nya sesuai
 
-
-const Home = () => {
+const HomePage = () => {
   const [user, setUser] = useState({});
-  const navigate = useNavigate();
-  const [todayData, setTodayData] = useState([]);
-  const [statusAbsensi, setStatusAbsensi] = useState(null);
-  const token = localStorage.getItem('token');
-  const userData = localStorage.getItem('user');
+  const [greeting, setGreeting] = useState('');
+  const [rekap, setRekap] = useState({
+    hadir: 0,
+    tidak_hadir: 0,
+    rata_rata_jam_masuk: '-',
+    terlambat: 0,
+  });
 
+  const navigate = useNavigate();
 
   useEffect(() => {
-  if (userData) {
-    setUser(JSON.parse(userData));
-  }
-
-  // Fetch attendance data for today
-  const fetchTodayData = async () => {
-    try {
-      const response = await axios.get('/today');
-      setTodayData(response.data.data);
-    } catch (error) {
-      console.error('Error fetching attendance data:', error.response ? error.response.data : error.message);
-    }
-  };
-
-  if (token) {
-    fetchTodayData();
-  } else {
-    // Handle case where token is not available (e.g., redirect to login)
-    navigate('/login');
-  }
-}, [navigate]);
-
-
-  const handleAbsenMasuk = async () => {
-    try {
-      
-      
-      // Memastikan user_id tersedia
-      if (!userData || !token) {
-        alert('User ID tidak ditemukan. Silakan login kembali.');
-        return;
-      }
-
-      const user = JSON.parse(userData);
-      const userId = user.id;
-
-      const response = await axios.post('/absensi/masuk', {
-        user_id: userId,
-      });  
-      toast.success('Absen Berhasil Selamat Bekerja', {
-        position: "top-right",
-        duration: 4000,
+    const userData = localStorage.getItem('user');
+    if (userData) {
+      const parsedUser = JSON.parse(userData);
+      setUser(parsedUser);
+  
+      // ambil bulan dan tahun sekarang
+      const now = new Date();
+      const bulan = now.getMonth() + 1; // 0-indexed
+      const tahun = now.getFullYear();
+  
+      Api.get('/absensi/bulanan', {
+        params: {
+          user_id: parsedUser.id,
+          bulan: bulan,
+          tahun: tahun
+        }
       })
-
-    } catch (error) {
-      console.error('Error saat absen masuk:', error.response ? error.response.data : error.message);
-      if (error.response && error.response.status === 401) {
-        alert('Token tidak valid atau telah kedaluwarsa.', {
-          position: "top-right",
-          duration: 4000,
-        });
-      } else if (error.response && error.response.status === 400) {
-        toast.error("Sudah Absen Masuk Hari Ini.", {
-          position: "top-right",
-          duration: 4000,
-        })
-
-      } else {
-        alert('Terjadi kesalahan saat absen masuk.');
-      }
-    }
-  };
-
-  const handleAbsenPulang = async () => {
-  try {
-    if (!userData || !token) {
-      alert('User ID tidak ditemukan. Silakan login kembali.');
-      return;
-    }
-
-    const user = JSON.parse(userData);
-    const userId = user.id;
-
-    const response = await axios.post('/absensi/pulang', {
-      user_id: userId,
-    });
-    toast.success('Absen pulang berhasil', {
-      position: "top-right",
-      duration: 4000,
-    });
-  } catch (error) {
-    console.error('Error saat absen pulang:', error.response ? error.response.data : error.message);
-    if (error.response && error.response.status === 401) {
-      ('Token tidak valid atau telah kedaluwarsa.');
-    } else if (error.response && error.response.status === 400) {
-      toast.error("Sudah Absen Pulang Hari Ini.", {
-        position: "top-right",
-        duration: 4000,
-      })
-    } else {
-      alert('Terjadi kesalahan saat absen pulang.');
-    }
-  }
-};
-
-
-  const handleLogout = () => {
-          Swal.fire({
-              title: 'Apakah yakin ingin keluar?',
-              icon: 'warning',
-              showCancelButton: true,
-              confirmButtonColor: '#3085d6',
-              cancelButtonColor: '#d33',
-              confirmButtonText: 'Ya, keluar',
-              cancelButtonText: 'Batal'
-          }).then((result) => {
-              if (result.isConfirmed) {
-                  // Hapus token dan user dari cookies dan localStorage
-                  Cookies.remove('token');
-                  Cookies.remove('user');
-                  localStorage.removeItem('user');
-                  localStorage.removeItem('token');
-      
-                  Swal.fire({
-                      title: 'Berhasil Logout',
-                      text: 'Anda berhasil keluar dari aplikasi.',
-                      icon: 'success',
-                      timer: 1500,
-                      showConfirmButton: false
-                  }).then(() => {
-                      navigate('/login');
-                  });
-              }
+        .then((res) => {
+          const data = res.data.data;
+  
+          const totalHariBulanIni = new Date(tahun, bulan, 0).getDate(); // jumlah hari dalam bulan
+          const hadir = data.filter(d => d.jam_masuk !== null).length;
+          const tidakHadir = totalHariBulanIni - hadir;
+          const terlambat = data.filter(d => {
+            if (!d.jam_masuk) return false;
+            const jamMasuk = d.jam_masuk.split(':');
+            const jam = parseInt(jamMasuk[0], 10);
+            const menit = parseInt(jamMasuk[1], 10);
+            return jam > 7 || (jam === 7 && menit > 0);
+          }).length;
+  
+          // hitung rata-rata jam masuk
+          const jamMasukList = data
+            .filter(d => d.jam_masuk !== null)
+            .map(d => {
+              const [h, m] = d.jam_masuk.split(':');
+              return parseInt(h) * 60 + parseInt(m); // dalam menit
+            });
+  
+          let rataRata = '-';
+          if (jamMasukList.length > 0) {
+            const totalMenit = jamMasukList.reduce((a, b) => a + b, 0);
+            const avg = Math.floor(totalMenit / jamMasukList.length);
+            const avgJam = Math.floor(avg / 60).toString().padStart(2, '0');
+            const avgMenit = (avg % 60).toString().padStart(2, '0');
+            rataRata = `${avgJam}:${avgMenit}`;
+          }
+  
+          setRekap({
+            hadir,
+            tidak_hadir: tidakHadir,
+            rata_rata_jam_masuk: rataRata,
+            terlambat
           });
-      };
+        })
+        .catch((err) => {
+          console.error('Gagal ambil presensi bulanan:', err);
+        });
+    }
+  
+    const hour = new Date().getHours();
+    if (hour >= 4 && hour < 11) setGreeting('Selamat Pagi');
+    else if (hour >= 11 && hour < 15) setGreeting('Selamat Siang');
+    else if (hour >= 15 && hour < 18) setGreeting('Selamat Sore');
+    else setGreeting('Selamat Malam');
+  }, []);
+  
 
   return (
-    <div className="container" id="appCapsule">
-      <div className="section" id="user-section">
-        <div className="d-flex align-items-center">
-          <div className="avatar">
-            <img
-              src="https://static.vecteezy.com/system/resources/previews/005/544/718/non_2x/profile-icon-design-free-vector.jpg"
-              alt="Profile"
-              className="imaged w64 rounded"
-            />
-          </div>
-          <div className="ms-3">
-            <h2 id="user-name">{user.nama}</h2>
-            <span id="user-role">{user.jabatan}</span>
-          </div>
-        </div>
+    <div className="home-page">
+      <div className="header">
+        <p>KaryaOne</p>
       </div>
 
-      <div className="section" id="menu-section">
+      <div className="main-container">
         <div className="card">
-          <div className="card-body text-center">
-            <div className="row">
-              <div className="col-3">
-                {/* <div className="menu-icon">
-                  <a href="/presensi" className="text-success">
-                    <FaUserTie size={40} />
-                  </a>
-                </div> */}
-                <div className="menu-icon">
-                  <a href="/profile" className="text-success">
-                    <FaUserTie size={40} />
-                  </a>
-                </div>
-                <div className="menu-name">
-                  <span>Profil</span>
-                </div>
-              </div>
-              <div className="col-3">
-                <div className="menu-icon">
-                  <a href="/pengajuan" className="text-danger">
-                    <IoCalendarOutline size={40} />
-                  </a>
-                </div>
-                <div className="menu-name">
-                  <span>Cuti</span>
-                </div>
-              </div>
-              <div className="col-3">
-                <div className="menu-icon">
-                  <a href="/history" className="text-warning">
-                    <BsClockHistory size={40} />
-                  </a>
-                </div>
-                <div className="menu-name">
-                  <span>Histori</span>
-                </div>
-              </div>
-              <div className="col-3">
-                <div className="menu-icon">
-                  <a onClick={handleLogout} className="text-orange">
-                    <AiOutlineLogout size={40} />
-                  </a>
-                </div>
-                <div className="menu-name">
-                  <span>Logout</span>
-                </div>
-              </div>
+          <div className="welcome-text">
+            <p className="greeting">{greeting}</p>
+            <h3 className="username">{user.nama}</h3>
+          </div>
+          <hr />
+          <div className="menu-icons">
+            <div className="menu-item" onClick={() => navigate('/profile')}>
+              <div className="icon-wrapper"><FaUser className="icon" /></div>
+              <div>Profile</div>
+            </div>
+            <div className="menu-item" onClick={() => navigate('/pengajuan')}>
+              <div className="icon-wrapper"><FaFileAlt className="icon" /></div>
+              <div>Pengajuan</div>
+            </div>
+            <div className="menu-item" onClick={() => navigate('/presensi')}>
+              <div className="icon-wrapper"><FaCamera className="icon" /></div>
+              <div>Absensi</div>
+            </div>
+            <div className="menu-item" onClick={() => navigate('/history')}>
+              <div className="icon-wrapper"><FaCalendarAlt className="icon" /></div>
+              <div>History</div>
             </div>
           </div>
         </div>
 
-        <div id="clock-container">
-          <Clock />
-        </div>
-      </div>
-
-      <div className="section mt-2" id="presence-section">
-        <div className="row">
-          <div className="col-6">
-            <button
-              id="absenButtonMasuk"
-              className="card-absensi gradasigreen"
-              onClick={handleAbsenMasuk}
-            >
-              <div className="card-body text-center">
-                <div className="iconpresence">
-                  <FiLogIn size={24} />
-                </div>
-                <div className="presencedetail">
-                  <h4 className="presencetitle">Masuk</h4>
-                </div>
-              </div>
-            </button>
-          </div>
-
-          <div className="col-6">
-            <button
-              id="absenButtonPulang"
-              className="card-absensi gradasired"
-              onClick={handleAbsenPulang}
-            >
-              <div className="card-body text-center">
-                <div className="iconpresence">
-                  <FiLogout size={24} />
-                </div>
-                <div className="presencedetail">
-                  <h4 className="presencetitle">Pulang</h4>
-                </div>
-              </div>
-            </button>
-          </div>
+        <div className="absensi-info">
+          <small>
+            Absensi Bulan <span className="highlight">{new Date().toLocaleString('id-ID', { month: 'long' })}</span>
+          </small>
         </div>
 
-        <div className="mt-4">
-          <h4>Absensi Hari Ini</h4>
-          <table className="table table-striped">
-            <thead>
-              <tr>
-                <th>Nama</th>
-                <th>Jabatan</th>
-                <th>Jam Masuk</th>
-                <th>Jam Pulang</th>
-              </tr>
-            </thead>
-            <tbody>
-              {todayData.length > 0 ? (
-                  todayData.map((absensi) => (
-                    <tr key={absensi.id}>
-                      <td>{absensi.nama}</td>
-                      <td>{absensi.jabatan}</td>
-                      <td>{absensi.jam_masuk ? new Date(absensi.jam_masuk).toLocaleTimeString() : '-'}</td>
-                      <td>{absensi.jam_pulang ? new Date(absensi.jam_pulang).toLocaleTimeString() : '-'}</td>
-                    </tr>
-                  ))
-                ) : (
-                  <tr>
-                    <td colSpan="4">Belum yang absen hari ini</td>
-                  </tr>
-                )}
-            </tbody>
-          </table>
+        <div className="stat-cards">
+          <div className="stat-card">
+            <div className="stat-title">Hadir</div>
+            <div className="stat-row">
+              <FaArrowRight className="stat-icon" />
+              <div className="stat-value">{rekap.hadir}</div>
+            </div>
+          </div>
+
+          <div className="stat-card">
+            <div className="stat-title">Tidak Hadir</div>
+            <div className="stat-row">
+              <FaUser className="stat-icon" />
+              <div className="stat-value">{rekap.tidak_hadir}</div>
+            </div>
+          </div>
+
+          <div className="stat-card">
+            <div className="stat-title">Rata Rata Jam Masuk</div>
+            <div className="stat-row">
+              <FaClock className="stat-icon" />
+              <div className="stat-value">{rekap.rata_rata_jam_masuk}</div>
+            </div>
+          </div>
+
+          <div className="stat-card">
+            <div className="stat-title">Telat Masuk</div>
+            <div className="stat-row">
+              <FaExclamationCircle className="stat-icon" />
+              <div className="stat-value">{rekap.terlambat}</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   );
 };
 
-export default Home;
+export default HomePage;

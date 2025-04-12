@@ -64,10 +64,11 @@ const Login = () => {
                     duration: 4000,
                 });
             } else {
-                toast.error('Terjadi kesalahan sistem. Coba lagi nanti.', {
-                    position: "top-right",
-                    duration: 4000,
-                });
+                toast.error(`Error: ${JSON.stringify(error.response?.data || error.message)}`, {
+                    position: "bottom-center",
+                    duration: 8000,
+                  });
+                  
             }
         }
     };

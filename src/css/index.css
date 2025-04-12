@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
+
     body{
         font-family: 'Varela Round', sans-serif;
         margin: 0;
@@ -130,14 +132,17 @@
         justify-content: space-between;
         padding: 10px 20px;
         border-radius: 50px;
-        background-color: #19c702;
+        background: radial-gradient(circle, #20962E 0%, #0A300F 70%);
         cursor: pointer;
         color: white;
-        box-shadow: 0 0px 9px rgb(0, 123, 255) ;
+        box-shadow: 0 0px 9px rgb(248, 248, 248) ;
     }
-    .headers h1 {
+    .headers p {
+        font-family: "Righteous", sans-serif;
+        font-weight: 500;
         margin: 0;
-        font-size: 20px;
+        font-size: 25px;
+        align-items: center;
     }
     .headers .back-button {
         padding: 5px;
@@ -149,10 +154,8 @@
         cursor: pointer;
         transition: all 0.3s ease-in-out;
         cursor: pointer;
-        color: #19c702;
+        color: #1d5017;
     }
-
-   
 
     .profile-container {
         background: rgb(247, 247, 247);

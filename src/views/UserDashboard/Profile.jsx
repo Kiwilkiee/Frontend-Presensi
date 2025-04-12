@@ -5,6 +5,8 @@ import { HiOutlineUser } from "react-icons/hi";
 import { IoMailOutline, IoBriefcaseOutline, IoLockClosedOutline } from "react-icons/io5";
 import axios from '../../api'; 
 import Header from '../../components/Header.jsx';
+import Swal from 'sweetalert2';
+import Cookies from 'js-cookie';
 
 
 
@@ -60,6 +62,42 @@ function Profile () {
           console.error('Error updating user data:', error);
         });
     };
+
+    const handleLogout = () => {
+      Swal.fire({
+        title: 'Yakin mau logout?',
+        text: "Kamu akan keluar dari akun ini.",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#6c757d',
+        confirmButtonText: 'Ya, logout!',
+        cancelButtonText: 'Batal'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // Hapus token dari localStorage
+          localStorage.removeItem('token');
+          localStorage.removeItem('user');
+    
+          // Hapus token dari cookies (jika disimpan di sana)
+          Cookies.remove('token');
+          Cookies.remove('user');
+    
+          Swal.fire({
+            title: 'Berhasil logout',
+            text: 'Kamu telah keluar dari akun.',
+            icon: 'success',
+            timer: 1500,
+            showConfirmButton: false
+          });
+    
+          // Redirect setelah logout
+          navigate('/');
+        }
+      });
+    };
+    
+    
   
     return (
       <div className="container">
@@ -85,7 +123,7 @@ function Profile () {
             {/* Jabatan */}
             <div className="profile-position">
               <span className="icon"><IoBriefcaseOutline /></span>
-              <span className="underline">{userData.jabatan}</span>
+              <span className="underline">{userData.divisi}</span>
               <span className='edit-icon' onClick={() => handleEditClick('jabatan')}><MdOutlineEdit /></span>
             </div>
   
@@ -106,31 +144,47 @@ function Profile () {
         </div>
   
         {/* Modal Bootstrap */}
-        <div className={`modal fade ${modalOpen ? 'show' : ''}`} style={{ display: modalOpen ? 'block' : 'none' }} tabIndex="-1" role="dialog">
-          <div className="modal-dialog" role="document">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title">Edit {currentEditField.charAt(0).toUpperCase() + currentEditField.slice(1)}</h5>
-                <button type="button" className="close" aria-label="Close" onClick={handleCloseModal}>
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div className="modal-body">
-                <input
-                  type={currentEditField === 'password' ? 'password' : 'text'}
-                  className="form-control"
-                  value={editValue}
-                  onChange={(e) => setEditValue(e.target.value)}
-                />
-              </div>
-              <div className="modal-footer">
-                <button type="button" className="btn btn-primary" onClick={handleSaveChanges}>Save</button>
-                <button type="button" className="btn btn-secondary" onClick={handleCloseModal}>Cancel</button>
+                {modalOpen && (
+          <>
+            <div className="modal-backdrop fade show"></div>
+            <div className="modal fade show d-block" tabIndex="-1" role="dialog" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
+              <div className="modal-dialog modal-dialog-centered" role="document">
+                <div className="modal-content shadow">
+                  <div className="modal-header">
+                    <h5 className="modal-title">Edit {currentEditField.charAt(0).toUpperCase() + currentEditField.slice(1)}</h5>
+                    <button type="button" className="btn-close" aria-label="Close" onClick={handleCloseModal}></button>
+                  </div>
+                  <div className="modal-body">
+                    <input
+                      type={currentEditField === 'password' ? 'password' : 'text'}
+                      className="form-control"
+                      value={editValue}
+                      onChange={(e) => setEditValue(e.target.value)}
+                      placeholder={`Masukkan ${currentEditField}`}
+                    />
+                  </div>
+                  <div className="modal-footer">
+                    <button type="button" className="btn btn-primary" onClick={handleSaveChanges}>Simpan</button>
+                    <button type="button" className="btn btn-secondary" onClick={handleCloseModal}>Batal</button>
+                  </div>
+                </div>
               </div>
             </div>
+          </>
+        )}
+
+          <div className="card mt-4">
+            <div className="card-body text-center text-warning">
+              ⚠️ Disarankan untuk login ulang setelah mengubah data profil agar perubahan dapat diterapkan sepenuhnya.
+            </div>
           </div>
+
+          <div className="d-grid gap-2 mt-3">
+            <button className="btn btn-danger" onClick={handleLogout}>Logout</button>
+          </div>
+
+
         </div>
-      </div>
     );
 }
 

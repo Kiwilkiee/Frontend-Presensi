@@ -37,10 +37,10 @@ function History() {
         }
     }, [navigate, userData, token]);
 
-    const getStatusClass = (absensi) => {
-        if (absensi.jam_masuk && absensi.jam_pulang) {
+    const getStatusClass = (presensi) => {
+        if (presensi.jam_masuk && presensi.jam_pulang) {
             return 'Hadir'; // Status Hadir
-        } else if (absensi.jam_masuk && !absensi.jam_pulang) {
+        } else if (presensi.jam_masuk && !presensi.jam_pulang) {
             return 'Progress'; // Status Proses
         } else {
             return 'status-tidak-hadir'; // Status Tidak Hadir jika perlu
@@ -65,21 +65,22 @@ function History() {
                         </thead>
                         <tbody>
                             {historyData.length > 0 ? (
-                                historyData.map((absensi) => (
-                                    <tr key={absensi.id}>
-                                        <td>{absensi.jam_masuk ? new Date(absensi.jam_masuk).toLocaleDateString() : '-'}</td>
-                                        <td>{absensi.jam_masuk ? new Date(absensi.jam_masuk).toLocaleTimeString() : '-'}</td>
-                                        <td>{absensi.jam_pulang ? new Date(absensi.jam_pulang).toLocaleTimeString() : '-'}</td>
+                                historyData.map((presensi) => (
+                                    <tr key={presensi.id}>
+                                        <td>{presensi.tanggal ?? '-'}</td>
+                                        <td>{presensi.jam_masuk ?? '-'}</td>
+                                        <td>{presensi.jam_pulang ?? '-'}</td>
+
                                         <td>
-                                            <span className={`status ${getStatusClass(absensi)}`}>
-                                                {getStatusClass(absensi).replace(/-/g, ' ').toUpperCase()}
+                                            <span className={`status ${getStatusClass(presensi)}`}>
+                                                {getStatusClass(presensi).replace(/-/g, ' ').toUpperCase()}
                                             </span>
                                         </td>
                                     </tr>
                                 ))
                             ) : (
                                 <tr>
-                                    <td colSpan="5">Tidak ada data absensi untuk user ini.</td>
+                                    <td colSpan="5">Tidak ada data presensi untuk user ini.</td>
                                 </tr>
                             )}
                         </tbody>

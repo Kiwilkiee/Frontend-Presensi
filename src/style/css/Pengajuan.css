@@ -1,0 +1,94 @@
+.pengajuan-container {
+    padding: 10px;
+    background-color: #fffdfc;
+    min-height: 100vh;
+  }
+  
+  .pengajuan-header {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .btn-ajukan {
+    background-color: #0d6efd;
+    color: white;
+    padding: 6px 20px;
+    border: none;
+    border-radius: 25px;
+    font-weight: 600;
+  }
+  
+  .divider {
+    border-top: 2px solid black;
+    margin-top: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .pengajuan-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .pengajuan-card {
+    background-color: white;
+    border-radius: 15px;
+    padding: 15px 20px;
+    box-shadow: -1px 4px 10px 5px rgba(0, 0, 0, 0.452);
+  }
+  
+  .card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.2rem;
+    font-weight: 700;
+  }
+  
+  .jenis {
+    text-transform: capitalize;
+  }
+  
+  .jenis-sakit {
+    color: #d12310;
+  }
+  
+  .jenis-cuti {
+    color: #e67e22;
+  }
+  
+  .jenis-izin {
+    color: #2980b9;
+  }
+  
+  .tanggal {
+    color: #000;
+  }
+  
+  .deskripsi {
+    margin: 10px 0;
+    font-size: 0.95rem;
+    color: #333;
+  }
+  
+  .status {
+    font-size: 1rem;
+    font-weight: 600;
+  }
+  
+  .status-diterima {
+    color: #27ae60;
+  }
+  
+  .status-menunggu {
+    color: #7f8c8d;
+  }
+  
+  .status-ditolak {
+    color: #e74c3c;
+  }
+  
+
+  

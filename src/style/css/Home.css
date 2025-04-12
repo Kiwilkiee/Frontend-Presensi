@@ -1,0 +1,155 @@
+@import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  .home-page {
+    background: radial-gradient(circle, #20962E 0%, #0A300F 70%);
+    min-height: 100vh;
+  }
+  
+  .header {
+    background: radial-gradient(circle, #1a8b27 0%, #0A300F 70%);
+    color: white;
+    text-align: center;
+    padding: 20px 0 60px;
+    font-size: 30px;
+    font-weight: bold;
+    font-family: "Righteous", sans-serif;
+
+  }
+  
+  .main-container {
+    background-color: #f2f2f2;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    margin-top: 20px;
+    padding-top: 20px;
+    min-height: 100vh;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .card {
+    background-color: white;
+    margin: -100px 10px 15px 10px;
+    border-radius: 25px;
+    padding: 10px;
+    box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
+    position: relative;
+    z-index: 2;
+  }
+
+  .welcome-text {
+    text-align: left;
+    padding-left: 10px; 
+    
+  }
+  .greeting {
+    margin: 0;
+    margin-bottom: 15px; 
+    font-size: 15px;
+    color: #333;
+  }
+  .username {
+    margin: 0;
+    margin-bottom: -10px; 
+    font-size: 25px;
+    font-weight: 500;
+    color: #000;
+    font-family: "Righteous", sans-serif;
+
+  }
+  .menu-icons {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 15px;
+    flex-wrap: wrap;
+  }
+  
+  .menu-item {
+    text-align: center;
+    margin-top: 10px;
+  }
+  
+  .icon-wrapper {
+    background-color: #6C2DC7;
+    border-radius: 12px;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 8px;
+  }
+  
+  .icon {
+    font-size: 28px;
+    color: white;
+    margin: 0;
+    padding: 0;
+  }
+  
+  
+  
+  .absensi-info {
+    padding: 15px;
+  }
+  
+  .highlight {
+    color: #6C2DC7;
+    font-weight: 500;
+    
+  }
+  .stat-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+    margin-top: -10px;
+    padding: 10px 15px;
+  }
+  
+  .stat-card {
+    background-color: white;
+    border-radius: 16px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 120px;
+    text-align: center;
+    transition: transform 0.2s ease;
+  }
+  
+  .stat-card:hover {
+    transform: translateY(-4px);
+  }
+  
+  .stat-title {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 0.5rem;
+  }
+  
+  .stat-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+  
+  .stat-icon {
+    font-size: 1.5rem;
+    color: #000;
+  }
+  
+  .stat-value {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #000;
+  }
+  

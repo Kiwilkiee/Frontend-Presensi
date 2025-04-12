@@ -6,11 +6,11 @@ function Header({ title }) {
   const navigate = useNavigate();
 
   return (
-      <div className="headers d-flex align-items-center">
+      <div className="headers ">
         <span className="back-button" onClick={() => navigate('/home')}>
           <FaArrowLeft size={24} />
         </span>
-        <h1 className="mx-auto">{title}</h1>
+        <p className="mx-auto">{title}</p>
         <span></span>
       </div>
   )
