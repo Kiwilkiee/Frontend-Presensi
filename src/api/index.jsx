@@ -3,6 +3,12 @@ import axios from 'axios'
 //import js cookie
 import Cookies from 'js-cookie';
 
+import { createBrowserHistory } from 'history';
+
+const history = createBrowserHistory();
+
+
+
 const Api = axios.create({
     
 
@@ -13,6 +19,21 @@ const Api = axios.create({
     headers: {
         "Accept": "application/json",
         "Content-Type": "application/json",
+    }
+});
+
+Api.interceptors.response.use(function (response) {
+    return response;
+}, (error) => {
+    if (error.response.status === 401) {
+        Cookies.remove('token');
+        Cookies.remove('user');
+        window.location = '/';
+    } else if (error.response.status === 403) {
+        const previousPath = window.location.pathname;
+        window.location.href = `/unauthorized?from=${encodeURIComponent(previousPath)}`;
+    } else {
+        return Promise.reject(error);
     }
 });
 
@@ -47,11 +68,10 @@ Api.interceptors.response.use(function (response) {
         //redirect "/"
         window.location = '/';
         
-    } else if(403 === error.response.status) {
-    
-        //redirect "/forbidden"
-        window.location = '/forbidden';
+    } else if (403 === error.response.status) {
 
+        window.location.href = '/unauthorized';
+    
     }else {
 
         //reject promise error

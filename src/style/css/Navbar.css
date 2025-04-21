@@ -1,48 +1,38 @@
+/* Navbar.css */
 .navbar {
+    height: 60px;
+    background-color: #fff;
+    border-bottom: 1px solid #ddd;
     display: flex;
-    justify-content: space-between;
+    color: black;
     align-items: center;
-    padding: 10px 20px;
-    background-color: #ffffff;
-    color: #fff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.toggle-button {
-    background-color: #fffffe;
-    border: none;
-    color: #81c77f;
-    font-size: 24px;
-    cursor: pointer;
-}
-
-.toggle-button:hover{
-    background-color: #ffffff;
-}
-
-.logout-button {
+    justify-content: space-between;
+    padding: 0 20px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  
+  /* Tambahkan supaya navbar tidak tertutup sidebar */
+  .main-content {
+    margin-left: 250px; /* Sama dengan lebar sidebar kamu */
+    width: calc(100% - 250px);
+  }
+  
+  /* Tombol */
+  .toggle-button,
+  .notification-button,
+  .logout-button {
     background: none;
     border: none;
-    color: #81c77f;
-    font-size: 24px;
+    font-size: 18px;
     cursor: pointer;
-}
-.notification-button {
-    background: none;
-    border: none;
-    color: #81c77f;
-    font-size: 24px;
-    cursor: pointer;
-}
-
-.notification-button:hover {
-    background-color: #ffffff;
-}
-
-.logout-button {
-    margin-left: auto;
-    margin-right: 30px;
-}
-.logout-button:hover{
-    background-color: #ffffff;
-}
+    margin-left: 10px;
+    color: black;
+  }
+  
+  .navbar-icons {
+    display: flex;
+    align-items: center;
+  }
+  

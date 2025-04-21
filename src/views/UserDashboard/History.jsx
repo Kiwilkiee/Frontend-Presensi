@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from '../../api'; 
+import axios from '../../api';
 import Header from '../../components/Header';
+
 function History() {
     document.title = "History - Absensi Indogreen";
 
@@ -18,17 +19,22 @@ function History() {
 
         const fetchHistoryData = async () => {
             try {
-                const userId = JSON.parse(userData).id; // Mengambil userId dari localStorage
+                const userId = JSON.parse(userData).id;
                 const response = await axios.get(`/absensi/${userId}`, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
                 });
-                setHistoryData(response.data);
+        
+                // Urutkan dari yang terbaru ke yang lama berdasarkan created_at
+                const sortedData = response.data.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+        
+                setHistoryData(sortedData);
             } catch (error) {
                 console.error('Error fetching history data:', error.response ? error.response.data : error.message);
             }
         };
+        
 
         if (token) {
             fetchHistoryData();
@@ -37,13 +43,20 @@ function History() {
         }
     }, [navigate, userData, token]);
 
-    const getStatusClass = (presensi) => {
-        if (presensi.jam_masuk && presensi.jam_pulang) {
-            return 'Hadir'; // Status Hadir
-        } else if (presensi.jam_masuk && !presensi.jam_pulang) {
-            return 'Progress'; // Status Proses
-        } else {
-            return 'status-tidak-hadir'; // Status Tidak Hadir jika perlu
+    const getStatusClass = (status) => {
+        switch (status) {
+            case 'Hadir':
+                return 'status-hadir';
+            case 'Proses':
+                return 'status-proses';
+            case 'Izin':
+                return 'status-izin';
+            case 'Sakit':
+                return 'status-sakit';
+            case 'Alpha':
+                return 'status-alpha';
+            default:
+                return 'status-unknown';
         }
     };
 
@@ -68,19 +81,18 @@ function History() {
                                 historyData.map((presensi) => (
                                     <tr key={presensi.id}>
                                         <td>{presensi.tanggal ?? '-'}</td>
-                                        <td>{presensi.jam_masuk ?? '-'}</td>
-                                        <td>{presensi.jam_pulang ?? '-'}</td>
-
+                                        <td>{presensi.jam_masuk ? presensi.jam_masuk.slice(0, 5) : '-'}</td>
+                                        <td>{presensi.jam_pulang ? presensi.jam_pulang.slice(0, 5) : '-'}</td>
                                         <td>
-                                            <span className={`status ${getStatusClass(presensi)}`}>
-                                                {getStatusClass(presensi).replace(/-/g, ' ').toUpperCase()}
+                                            <span className={`status ${getStatusClass(presensi.status)}`}>
+                                                {presensi.status?.toUpperCase() || 'TIDAK DIKETAHUI'}
                                             </span>
                                         </td>
                                     </tr>
                                 ))
                             ) : (
                                 <tr>
-                                    <td colSpan="5">Tidak ada data presensi untuk user ini.</td>
+                                    <td colSpan="4">Tidak ada data presensi untuk user ini.</td>
                                 </tr>
                             )}
                         </tbody>

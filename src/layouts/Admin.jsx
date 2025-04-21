@@ -1,27 +1,24 @@
-// AdminLayout.jsx
 import React, { useState } from 'react';
 import SidebarComponent from '../components/SidebarComponent';
 import NavbarComponent from '../components/NavbarComponent';
-import '../style/css/AdminLayout.css'; // Tambahkan CSS jika diperlukan
+import '../style/css/AdminLayout.css';
 
-const Admin = ({ children }) => {
-    const [isSidebarOpen, setSidebarOpen] = useState(true);
+const admin = ({ children }) => {
+  const [collapsed, setCollapsed] = useState(false);
 
-    const toggleSidebar = () => {
-        setSidebarOpen(!isSidebarOpen);
-    };
+  const toggleSidebar = () => {
+    setCollapsed(!collapsed);
+  };
 
-    return (
-        <div className="admin-layout">
-            <SidebarComponent isOpen={isSidebarOpen} />
-            <div className={`content ${isSidebarOpen ? 'sidebar-open' : 'sidebar-closed'}`}>
-                <NavbarComponent toggleSidebar={toggleSidebar} />
-                <main>
-                    {children}
-                </main>
-            </div>
-        </div>
-    );
+  return (
+    <div className={`layout ${collapsed ? 'sidebar-collapsed' : ''}`}>
+      <SidebarComponent collapsed={collapsed} />
+      <div className="main-area">
+        <NavbarComponent toggleSidebar={toggleSidebar} />
+        <div className="content-area">{children}</div>
+      </div>
+    </div>
+  );
 };
 
-export default Admin;
+export default admin;

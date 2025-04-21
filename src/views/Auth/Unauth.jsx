@@ -1,11 +1,12 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import Cookies from 'js-cookie';
 
 const Unauthorized = () => {
     document.title = "Unauth - Absensi Indogreen";
     const navigate = useNavigate();
+    const location = useLocation();
 
     const clearDataAndRedirect = () => {
         Cookies.remove('token');
@@ -15,10 +16,13 @@ const Unauthorized = () => {
     };
 
     const goBack = () => {
-        if (window.history.length > 2) {
-            navigate(-1);
+        const searchParams = new URLSearchParams(location.search);
+        const from = searchParams.get('from');
+
+        if (from) {
+            navigate(from);
         } else {
-            navigate('/home'); // Atau ganti dengan halaman lain
+            navigate('/home'); // fallback
         }
     };
 

@@ -6,7 +6,8 @@ import { Navigate } from "react-router-dom";
 function privateRoutes({ children, allowedRoles }) {
 
     const token = Cookies.get('token');
-    const userRole = localStorage.getItem('role');
+    const userRole = localStorage.getItem('role') || Cookies.get('role');
+    
 
  
     if (!token) {

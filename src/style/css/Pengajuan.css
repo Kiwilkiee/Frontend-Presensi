@@ -1,7 +1,10 @@
 .pengajuan-container {
-    padding: 10px;
-    background-color: #fffdfc;
-    min-height: 100vh;
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
   
   .pengajuan-header {
@@ -89,6 +92,40 @@
   .status-ditolak {
     color: #e74c3c;
   }
-  
 
+  .swal-detail-modal {
+    font-size: 14px;
+  }
+  
+  .modal-title {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  
+  .tab-buttons {
+    display: flex;
+    gap: 5px;
+  }
+  
+  .tab-btn {
+    flex: 1;
+    padding: 8px 0;
+    background-color: #0d3edc;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  
+  .tab-btn:not(:last-child) {
+    margin-right: 8px;
+  }
+  
+  .tab-btn.active-tab {
+    background-color: #0d3edc;
+    color: white;
+  }
+  
   

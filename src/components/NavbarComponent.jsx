@@ -47,9 +47,7 @@ const NavbarComponent = ({ toggleSidebar }) => {
                 <FaBars /> 
             </button>
             <div className="navbar-icons">
-                <button className="notification-button">
-                    <FaBell /> 
-                </button>
+                
                 <button className="logout-button" onClick={handleLogout}>
                     <FaSignOutAlt />
                 </button>

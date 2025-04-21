@@ -17,6 +17,8 @@ const AdminLayout = lazy(() => import('../layouts/Admin.jsx'));
 
 //import private routes
 import PrivateRoutes from "./privateRoutes.jsx";
+import LokasiPage from '../views/AdminDashboard/LokasiPage.jsx';
+import AutoRedirect from './AutoRedirect.jsx';
 
 
 //page user
@@ -41,7 +43,15 @@ const Rekap = lazy(() => import('../views/AdminDashboard/RekapPage.jsx'))
 
 const PengajuanAdmin = lazy(() => import('../views/AdminDashboard/PengajuanPage.jsx'))
 
+const Lokasi = lazy(() => import('../views/AdminDashboard/LokasiPage.jsx'))
+
+const JadwalKerja = lazy(() => import('../views/AdminDashboard/JadwalKerja.jsx'))
+
+const PengingatAbsenPage = lazy(() => import('../views/AdminDashboard/PengingatAbsenPage.jsx'))
+
 const Unauth = lazy(() => import('../views/Auth/Unauth.jsx'))
+
+
 
 
 
@@ -49,17 +59,16 @@ export default function RoutesIndex() {
 
     return (
         <Router>
-
             <Routes>
-                
                 <Route 
                 path="/"
                 element={
                     <Suspense fallback={<Loader />}>
-                        <Welcome />
+                    <AutoRedirect />
                     </Suspense>
                 }
                 />
+
 
                 <Route 
                 path="/Login"
@@ -194,6 +203,45 @@ export default function RoutesIndex() {
                             <PrivateRoutes allowedRoles={['admin']}>
                                 <AdminLayout>
                                     <PengajuanAdmin />
+                                </AdminLayout>
+                            </PrivateRoutes>
+                        </Suspense>
+                    }
+                />
+
+                <Route 
+                    path='/setting/lokasi'
+                    element={
+                        <Suspense fallback={<Loader />}>
+                            <PrivateRoutes allowedRoles={['admin']}>
+                                <AdminLayout>
+                                    <LokasiPage />
+                                </AdminLayout>
+                            </PrivateRoutes>
+                        </Suspense>
+                    }                    
+                />
+
+                <Route 
+                    path='/setting/jadwal'
+                    element={
+                        <Suspense fallback={<Loader />}>
+                            <PrivateRoutes allowedRoles={['admin']}>
+                                <AdminLayout>
+                                    <JadwalKerja />
+                                </AdminLayout>
+                            </PrivateRoutes>
+                        </Suspense>
+                    }
+                />
+                
+                <Route 
+                    path='/setting/pengingat'
+                    element={
+                        <Suspense fallback={<Loader />}>
+                            <PrivateRoutes allowedRoles={['admin']}>
+                                <AdminLayout>
+                                    <PengingatAbsenPage />
                                 </AdminLayout>
                             </PrivateRoutes>
                         </Suspense>

@@ -66,6 +66,21 @@
         text-align: center;
         
     }
+
+    .filters {
+        margin-top: 8px;
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+      
+      .filters select {
+        padding: 6px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        font-size: 14px;
+      }
+      
     button.card-absensi  {
         border: none;
         padding: 20px !important;
@@ -260,38 +275,49 @@
     }
 
     /* index.css */
-    .Hadir {
-        color: white;
-        background-color: rgb(14, 238, 14); /* Hijau */
-        border-radius: 50px; /* Bentuk kapsul */
-        padding: 1px 5px !important;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        text-align: center !important;
+    .status {
+        padding: 5px 10px;
+        border-radius: 20px;
+        font-size: 0.9rem;
         display: inline-block;
-        min-width: 70px; /* Panjang minimal */
-    }
-
-    .Progress {
-        color: white;
-        background-color: rgb(252, 195, 9); /* Kuning */
-        border-radius: 50px; /* Bentuk kapsul */
-        padding: 2px 6px !important;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        text-align: center !important;
-        display: inline-block;
-        min-width: 80px; /* Panjang minimal */
-    }
-
-    .status-tidak-hadir {
-        color: white;
-        background-color: rgb(220, 53, 69); /* Merah */
-        border-radius: 50px; /* Bentuk kapsul */
-        padding: 3px 5px !important;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        text-align: center !important;
-        display: inline-block;
-        min-width: 80px; /* Panjang minimal */
-    }
+      }
+      
+      .status-hadir {
+        background-color: #00ff3c;
+        color: #ffffff;
+        font-weight: 600;
+      }
+      
+      .status-proses {
+        background-color: #f8be00;
+        color: #ffffff;
+        font-weight: 600;
+      }
+      
+      .status-izin {
+        background-color: #007bff;
+        color: #ffffff;
+        font-weight: 600;
+      }
+      
+      .status-sakit {
+        background-color: #ff9900;
+        color: #eeeeee;
+        font-weight: 600;
+      }
+      
+      .status-alpha {
+        background-color: #ce0112;
+        color: #ffffff;
+        font-weight: 600;
+      }
+      
+      .status-unknown {
+        background-color: #0051ff;
+        color: #e0e5e9;
+        font-weight: 600;
+      }
+      
 
 
 
