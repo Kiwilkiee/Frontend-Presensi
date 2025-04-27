@@ -20,6 +20,15 @@ import PrivateRoutes from "./privateRoutes.jsx";
 import LokasiPage from '../views/AdminDashboard/LokasiPage.jsx';
 import AutoRedirect from './AutoRedirect.jsx';
 
+// auth page
+const ForgotPassword = lazy(() => import('../views/Auth/ForgptPassword.jsx'))
+
+const VerifyOtp = lazy(() => import('../views/Auth/VerifyOtp.jsx'))
+
+const ResetPassword = lazy(() => import('../views/Auth/ResetPassword.jsx'))
+
+const Unauth = lazy(() => import('../views/Auth/Unauth.jsx'))
+
 
 //page user
 const Home = lazy(() => import('../views/UserDashboard/Home.jsx'))
@@ -49,7 +58,6 @@ const JadwalKerja = lazy(() => import('../views/AdminDashboard/JadwalKerja.jsx')
 
 const PengingatAbsenPage = lazy(() => import('../views/AdminDashboard/PengingatAbsenPage.jsx'))
 
-const Unauth = lazy(() => import('../views/Auth/Unauth.jsx'))
 
 
 
@@ -71,12 +79,39 @@ export default function RoutesIndex() {
 
 
                 <Route 
-                path="/Login"
-                element={
-                    <Suspense fallback={<Loader />}>
-                        <Login />
-                    </Suspense>
-                }
+                    path="/Login"
+                    element={
+                        <Suspense fallback={<Loader />}>
+                            <Login />
+                        </Suspense>
+                    }
+                />
+
+                <Route 
+                    path="/forgotPassword"
+                    element={
+                        <Suspense fallback={<Loader />}>
+                            <ForgotPassword />
+                        </Suspense>
+                    }
+                />
+
+                <Route 
+                    path="/verifyOtp"
+                    element={
+                        <Suspense fallback={<Loader />}>
+                            <VerifyOtp />
+                        </Suspense>
+                    }
+                />
+
+                <Route 
+                    path="/resetPassword"
+                    element={
+                        <Suspense fallback={<Loader />}>
+                            <ResetPassword />
+                        </Suspense>
+                    }
                 />
 
                 <Route 

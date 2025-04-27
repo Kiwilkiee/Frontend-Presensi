@@ -7,13 +7,10 @@ import { createBrowserHistory } from 'history';
 
 const history = createBrowserHistory();
 
-
-
 const Api = axios.create({
     
-
     //set endpoint API
-    baseURL: 'http://127.0.0.1:8000/api',
+    baseURL: 'https://backendi.karyaone.my.id/api',
 
     //set header axios
     headers: {

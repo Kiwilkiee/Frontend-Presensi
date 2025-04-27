@@ -20,7 +20,11 @@ function RekapPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredKaryawan, setFilteredKaryawan] = useState([]);
   const [selectedDate, setSelectedDate] = useState(null);
-
+  const totalPages = Math.ceil(filteredKaryawan.length / itemsPerPage);
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = filteredKaryawan.slice(indexOfFirstItem, indexOfLastItem);
+  
   const handlePageChange = (pageNumber) => setCurrentPage(pageNumber);
 
   // Ambil data user
@@ -73,26 +77,35 @@ function RekapPage() {
     setSearchTerm(event.target.value);
   };
 
-  const totalPages = Math.ceil(filteredKaryawan.length / itemsPerPage);
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = filteredKaryawan.slice(indexOfFirstItem, indexOfLastItem);
-
   const handleDownload = () => {
-    const data = absensi.map(item => ({
-      ID: item.user_id,
-      Nama: karyawan.find(k => k.id === item.user_id)?.nama || '-',
-      Tanggal: item.jam_masuk ? moment(item.jam_masuk).format('YYYY-MM-DD') : '-',
-      Jam_Masuk: item.jam_masuk ? moment(item.jam_masuk).format('HH:mm:ss') : '-',
-      Jam_Pulang: item.jam_pulang ? moment(item.jam_pulang).format('HH:mm:ss') : '-'
-    }));
-
+    const data = filteredKaryawan.map((karyawan) => {
+      const karyawanAbsensi = absensi.filter(item => item.user_id === karyawan.id);
+  
+      const totalHadir = karyawanAbsensi.filter(item => item.status === 'Hadir').length;
+      const totalIzin = karyawanAbsensi.filter(item => item.status === 'Izin').length;
+      const totalSakit = karyawanAbsensi.filter(item => item.status === 'Sakit').length;
+      const totalAlpha = karyawanAbsensi.filter(item => item.status === 'Alpha').length;
+      const totalCuti = karyawanAbsensi.filter(item => item.status === 'Cuti').length;
+      const totalTidakAdaJadwal = karyawanAbsensi.filter(item => item.status_kehadiran === 'Tidak Ada Jadwal').length;
+  
+      return {
+        Nama: karyawan.nama,
+        Hadir: totalHadir,
+        Izin: totalIzin,
+        Sakit: totalSakit,
+        Alpha: totalAlpha,
+        Cuti: totalCuti,
+        'Tidak Ada Jadwal': totalTidakAdaJadwal
+      };
+    });
+  
     const worksheet = XLSX.utils.json_to_sheet(data);
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, 'Rekap Absensi');
-
+  
     XLSX.writeFile(workbook, `Rekap_Absensi_${moment().format('YYYY-MM-DD')}.xlsx`);
   };
+  
 
   return (
     <div className='rekap-page'>
